@@ -257,7 +257,9 @@ func (i *I2C) smbusCmd(addr uint16, read bool, reg byte, protocol smbusProtocol,
 	defer i.mu.Unlock()
 
 	// Set the slave address.
+	fmt.Printf("Setting smbus slave address %x\n", addr)
 	if err := i.f.Ioctl(ioctlSlave, uintptr(addr)); err != nil {
+		fmt.Printf("Failed to set smbus slave address %x: %v\n", addr, err)
 		return fmt.Errorf("sysfs-smbus: %v", err)
 	}
 
